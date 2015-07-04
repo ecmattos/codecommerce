@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container"> 
 		<h3>Produtos: Categorias</h3>
-		<a href="#" class="btn btn-default"><i class="glyphicon glyphicon-file"></i></a>
+		<a href="{{ route('categories.create') }}" class="btn btn-default"><i class="glyphicon glyphicon-file"></i></a>
 		<table class="table"> 
 			<thead>
 				<tr>
@@ -16,10 +16,10 @@
 			<tbody>
 				@foreach($categories as $category)
 			        <tr>
-			        	<td width='1%'><a href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
+			        	<td width='1%'><a href="{{ route('categories.edit', ['id'=>$category->id]) }}"><i class="glyphicon glyphicon-edit"></i></a></td>
 			        	<td width='24%'>{{ $category->name }}</td>
 			        	<td>{{ $category->description }}</td>
-			        	<td width='1%'><a href="#"><i class="glyphicon glyphicon-trash danger"></i></a></td>
+			        	<td width='1%'><a href="{{ route('categories.destroy', ['id'=>$category->id]) }}"><i class="glyphicon glyphicon-trash danger"></i></a></td>
 			        </tr>
 			    @endforeach
 			</tbody>
