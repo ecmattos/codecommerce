@@ -11,11 +11,11 @@ use CodeCommerce\Category;
 
 class CategoriesController extends Controller
 {
-    private $categories;
+    private $categoryModel;
 
-    public function __construct(Category $category)
+    public function __construct(Category $categoryModel)
     {
-        $this->categories = $category;
+        $this->categoryModel = $categoryModel;
     }
 
     /**
@@ -26,7 +26,7 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        $categories = $this->categories->all();
+        $categories = $this->categoryModel->all();
 
         return view('categories.index', compact('categories'));
 
@@ -39,7 +39,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -47,9 +47,16 @@ class CategoriesController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $category = $this->categoryModel->fill($input);
+
+        $category->save();
+
+        return redirect('categories');
+
     }
 
     /**
@@ -71,7 +78,9 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = $this->categoryModel->find($id);
+
+        return view('categories.edit', compact('category'));;
     }
 
     /**
@@ -80,9 +89,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Requests\CategoryRequest $request, $id)
     {
-        //
+        $this->categoryModel->find($id)->update($request->all());
+
+        return redirect('categories'); 
     }
 
     /**
@@ -93,6 +104,8 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->categoryModel->find($id)->delete();
+
+        return redirect('categories');  
     }
 }

@@ -8,6 +8,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
+					<th>ID</th>
 					<th>Nome</th>
 					<th>Descrição</th>
 					<th>#</th>
@@ -17,6 +18,7 @@
 				@foreach($categories as $category)
 			        <tr>
 			        	<td width='1%'><a href="{{ route('categories.edit', ['id'=>$category->id]) }}"><i class="glyphicon glyphicon-edit"></i></a></td>
+			        	<td width='4%'>{{ $category->id }}</td>
 			        	<td width='24%'>{{ $category->name }}</td>
 			        	<td>{{ $category->description }}</td>
 			        	<td width='1%'><a href="{{ route('categories.destroy', ['id'=>$category->id]) }}"><i class="glyphicon glyphicon-trash danger"></i></a></td>
