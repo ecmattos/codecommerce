@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use CodeCommerce\Category;
 
+use Faker\Factory as Faker;
+
 class CategoryTableSeeder extends Seeder
 {
     /**
@@ -16,16 +18,15 @@ class CategoryTableSeeder extends Seeder
     {
         DB::table('categories')->truncate();
 
-        Category::create(
-            [
-                'name' => 'TV',
-                'description' => 'Tudo sobre televisores.'
-            ]);
+        $faker = Faker::create();
 
-        Category::create(
+        foreach(range(1,15) as $i)
+        {
+            Category::create(
             [
-                'name' => 'Informática',
-                'description' => 'Tudo sobre informática.'
+                'name' => $faker->word(),
+                'description' => $faker->sentence()
             ]);
+        }
     }
 }
