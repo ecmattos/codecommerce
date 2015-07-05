@@ -3,9 +3,9 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use CodeCommerce\Category;
+use CodeCommerce\Product;
 
-class CategoryTableSeeder extends Seeder
+class ProductTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->truncate();
+        DB::table('products')->truncate();
 
-        factory('CodeCommerce\Category',15)->create();
+        factory('CodeCommerce\Product',40)->create();
     }
 }
