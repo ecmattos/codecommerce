@@ -8,7 +8,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>ID</th>
+					<th>Images</th>
 					<th>Nome</th>
 					<th>Descrição</th>
 					<th>Categoria</th>
@@ -20,7 +20,7 @@
 				@foreach($products as $product)
 			        <tr>
 			        	<td width='1%'><a href="{{ route('products.edit', ['id'=>$product->id]) }}"><i class='glyphicon glyphicon-edit'></i></a></td>
-			        	<td width='4%'>{{ $product->id }}</td>
+			        	<td width='4%' class="text-center"><a href="{{ route('products.images', ['id'=>$product->id]) }}"><i class='glyphicon glyphicon-camera'></i></a></td>
 			        	<td width='20%'>{{ $product->name }}</td>
 			        	<td>{{ str_limit($product->description, $limit = 100, $end = '...') }}</td>
 			        	<td>{{ $product->category->name }}</td>
