@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
-
 Route::controllers(
 	[
     	'auth' => 'Auth\AuthController',
@@ -22,6 +18,10 @@ Route::controllers(
 	]);
 
 Route::pattern('id', '[0-9+]');	
+
+		Route::get('/', 'StoreController@index');
+		Route::get('category/{id}', ['as' => 'store.category', 'uses' => 'StoreController@category']);
+
 		
 		Route::get('categories/', ['as' => 'categories', 'uses' => 'CategoriesController@index']);
 		Route::get('categories/create', ['as' => 'categories.create', 'uses' => 'CategoriesController@create']);
