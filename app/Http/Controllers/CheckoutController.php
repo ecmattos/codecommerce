@@ -16,6 +16,10 @@ use CodeCommerce\OrderItem;
 use CodeCommerce\Cart;
 use CodeCommerce\Category;
 
+//PagSeguro
+use PHPSC\PagSeguro\Items\Item;
+use PHPSC\PagSeguro\Requests\Checkout\CheckoutService;
+
 class CheckoutController extends Controller
 {
     public function __construct()
@@ -23,7 +27,7 @@ class CheckoutController extends Controller
     	$this->middleware('auth');
     } 
 
-    public function place(Order $orderModel, OrderItem $ordemItem)
+    public function place(Order $orderModel, OrderItem $ordemItem, CheckoutService $checkoutService)
     {
     	if(!Session::has('cart'))
     	{
@@ -36,18 +40,25 @@ class CheckoutController extends Controller
 
     	if ($cart->getTotal() > 0)
     	{
-    	    $order = $orderModel->create(['user_id' => Auth::user()->id, 'total' => $cart->getTotal()]);
+    	    $checkout = $checkoutService->createCheckoutBuilder(); //pagseguro
+
+            $order = $orderModel->create(['user_id' => Auth::user()->id, 'total' => $cart->getTotal()]); //inclui na tabela
 
     		foreach ($cart->all() as $k=>$item) 
     		{
-    			$order->items()->create(['product_id'=>$k, 'price'=>$item['price'], 'qtd'=>$item['qtd']]);
+    			$checkout->addItem(new Item($k, $item['name'], number_format($item['price'], 2, ".",""), $item['qtd']));//pagseguro
+                
+                $order->items()->create(['product_id'=>$k, 'price'=>$item['price'], 'qtd'=>$item['qtd']]); //inclui na tabela
     		}
     		
     		$cart->clear();
 
     		event(new CheckoutEvent(Auth::user(), $order));
 
-            return view('store.checkout', compact('cart', 'order', 'categories'));
+            $response = $checkoutService->checkout($checkout->getCheckout());//pagseguro
+            return redirect($response->getRedirectionUrl());//pagseguro
+            
+            #return view('store.checkout', compact('cart', 'order', 'categories'));
         }
         else
         {

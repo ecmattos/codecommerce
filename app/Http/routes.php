@@ -51,3 +51,5 @@ Route::pattern('id', '[0-9+]');
 		Route::get('products/{id}/create_image', ['as' => 'products.images.create', 'uses' => 'ProductsController@create_image']);
 		Route::post('products/{id}/store_image', ['as' => 'products.images.store', 'uses' => 'ProductsController@store_image']);
 		Route::get('products/{id}/destroy_image', ['as' => 'products.images.destroy', 'uses' => 'ProductsController@destroy_image']);
+
+		Route::get('/test', 'CheckoutController@test');
