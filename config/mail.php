@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'contato@spmtec.com', 'name' => 'SPMTec - Contato'],
 
     /*
     |--------------------------------------------------------------------------
@@ -121,4 +121,8 @@ return [
 
     'pretend' => false,
 
+    #'to' => [
+    #        'address' => 'ecmattos@ig.com.br',
+    #        'name' => 'Eduardo C de Mattos'
+    #    ],
 ];

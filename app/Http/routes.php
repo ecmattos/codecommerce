@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::controllers(
 	[
     	'auth' => 'Auth\AuthController',
@@ -26,8 +27,12 @@ Route::pattern('id', '[0-9+]');
 		Route::get('cart/add/{id}', ['as' => 'cart.add', 'uses' => 'CartController@add']);
 		Route::get('cart/destroy/{id}', ['as' => 'cart.destroy', 'uses' => 'CartController@destroy']);
 
-		Route::get('checkout/placeOrder', ['as' => 'checkout.place', 'uses' => 'CheckoutController@place']);
-		
+		Route::group(['middleware' => 'auth'], function()	
+			{	
+				Route::get('checkout/placeOrder', ['as' => 'checkout.place', 'uses' => 'CheckoutController@place']);
+				Route::get('account/orders', ['as' => 'account.orders', 'uses' => 'AccountController@orders']);
+			});
+
 		Route::get('categories/', ['as' => 'categories', 'uses' => 'CategoriesController@index']);
 		Route::get('categories/create', ['as' => 'categories.create', 'uses' => 'CategoriesController@create']);
 		Route::get('categories/{id}/edit', ['as' => 'categories.edit', 'uses' => 'CategoriesController@edit']);
